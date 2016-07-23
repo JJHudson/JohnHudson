@@ -1,0 +1,110 @@
+/* All artwork and code is copyright / intellectual property of Kodu Digital Marketing Ltd. */
+	body{ width: 100%; height: 100%; background: url(bg.jpg) center top no-repeat; margin:0;padding:0; font-family:Arial; }
+	
+	#front{ width: 800px; height: 1232px; background: url(frontpage.jpg) 0 0 no-repeat; position: absolute; top: 0; left: 0; z-index: 100; }
+	#front #close_front{ width: 260px; height: 70px; background: #cc2000; position: absolute; bottom: 37px; right: 40px; opacity: 0; }
+	
+	#show_front{ width: 240px; height: 70px; background: #cc2000; position: absolute; bottom: -100px; right: 0; opacity: 0; }
+	
+	#container{position:relative;}
+	#sketchpad{  }
+	#clear{ padding: 27px 10px; width: 205px; text-align: center;  color: #fff; margin: 0 0 0 25px; display: inline; }
+	#clear{ background: red; opacity: 0; position: absolute; bottom: -100px; left: -30px; }
+	#submit{ padding: 27px 10px; width: 300px; text-align: center;  color: #fff; margin: 0 0 0 25px; display: inline; }
+	#submit{ background: red; opacity: 0; position: absolute; bottom: -100px; left: 200px; }
+	#save_close_btn{ width: 230px; height: 60px; background: red; position: absolute; bottom: -90px; right: 0; opacity: 0; }
+	#pen_small, #pen_medium, #pen_large{ background: #cc2000; }
+	#color_black{ background: #000; color: #fff; }
+	#color_green{ background: #3cb878; color: #fff; }
+	#color_yellow{ background: #fff200; color: #fff; }
+	#draw_erase{ width: 116px; height: 58px; }
+	.pencil{ background: url(draw_erase.png) 0 0 no-repeat!important; }
+	.erase{ background: url(draw_erase.png) 0 -57px no-repeat!important; }
+	.ui-body-c{ background: none!important;	}
+	#brushSize, #color{ display: none; }
+	#brush_wrapper{ width: 137px!important; height: 60px!important; background: url(slider_bg.png) 0 0 no-repeat; }
+	#color_wrapper{ width: 231px!important; height: 60px!important; background: url(color_bg.png) 0 0 no-repeat; }
+	#brush_wrapper .ui-slider{  width: 117px!important; height: 60px!important; border: none; outline: none; margin: 0 auto!important; background: none!important; }
+	#color_wrapper .ui-slider{  width: 211px!important; height:60px!important; border: none; outline: none; margin: 0 auto!important; background: none!important;  }
+	#brush_wrapper .ui-slider-handle,
+	#color_wrapper .ui-slider-handle{ width: 45px!important; height: 45px!important; border: none!important; outline: none!important; -webkit-box-shadow: none; background: #cccccc; border-radius: 40px; box-shadow: inset 5px 6px 5px #B5B5B5; }
+	#color_wrapper .ui-slider-handle{ /* -webkit-transition: 0.15s linear; */ background: #000;  }
+	.ui-btn-inner{ border: 5px #fff solid;;box-shadow: 0 0 5px #888; width: 35px!important; height: 35px!important; border-radius: 40px; padding: 0!important; }
+	a.ui-slider-handle{ margin-top: -27px!important; }
+	#btn_pencil{ float: left; margin: 0 0 0 28px; }
+	#btn_brush{ float: left; margin: 0 0 0 15px; }
+	#btn_color{ float: left; margin: 0 0 0 30px; }
+	.left{ float: left; }
+	.clear{ clear: both; }
+	
+	
+	.overlay_bg{ width: 100%; height: 100%; background: #000; opacity: 0.5; }
+	
+	#sorry_overlay{ width: 800px; height: 1232px; position: absolute; top: 0; left: 0; z-index: 100; display: none; }
+	#sorry_overlay #sorry_copy{ width: 683px; height: 463px; background: url(sorry.png) 0 0 no-repeat; position: absolute; top:50px; left: 58px; }
+	
+	#submit_overlay{ width: 800px; height: 1232px; position: absolute; top: 0; left: 0; z-index: 100; display: none; }
+	#submit_overlay #submit_copy{ width: 772px; height: 739px; background: url(submit_bg.png) 0 0 no-repeat; position: absolute; top:50px; left: 21px; }
+	#submit_overlay #backtToDoodle{ width: 270px; height: 60px; background: #f0f0f0; position: absolute; bottom: 55px; right: 115px; opacity: 0; }
+	#submit_overlay #submitDrawing{ width: 230px; height: 60px; background: #f0f0f0; position: absolute; bottom: 55px; left: 105px; opacity: 0; }
+	
+	#thanks_overlay{ width: 800px; height: 1232px; position: absolute; top: 0; left: 0; z-index: 100; display: none; }
+	#thanks_overlay #thanks_copy{ width: 663px; height: 335px; background: url(thankyou.png) 0 0 no-repeat; position: absolute; top:50px; left: 68px; }
+	
+	#clear_overlay{ width: 800px; height: 1232px; position: absolute; top: 0; left: 0; z-index: 100; display: none; }
+	#clear_overlay #clear_copy{ width: 638px; height: 413px; background: url(clearpage.png) 0 0 no-repeat; position: absolute; top:50px; left: 81px; }
+	#clear_overlay #clear_copy #clear_true{ width: 150px; height: 70px; background: #f0f0f0; position: absolute; bottom: 77px; left: 160px; opacity: 0; }
+	#clear_overlay #clear_copy #clear_false{ width: 150px; height: 70px; background: #f0f0f0; position: absolute; bottom: 77px; right: 160px; opacity: 0; }
+	
+	#terms_overlay{ width: 740px; height: 1192px; background: #1f65ab; color: #fff; position: absolute; top: 0; left: 0; z-index: 100; display: none; padding: 20px 40px 20px 20px; }
+	#terms_overlay ul li{ list-style-type: decimal; padding: 0 0 10px 0; font-size: 15px; }
+	#terms_overlay #close_terms{  }
+	
+	#save_overlay{ width: 800px; height: 1232px; position: absolute; top: 0; left: 0; z-index: 100; display: none; }
+	#save_overlay #save_copy{ width: 638px; height: 463px; background: url(saveandclose.png) 0 0 no-repeat; position: absolute; top:50px; left: 81px; }
+	#save_overlay #save_copy #save_doodle{ width: 150px; height: 70px; background: navy; position: absolute; bottom: 83px; right: 138px; opacity: 1; }
+	#save_overlay #save_copy #save_close{ width: 150px; height: 70px; background: red; position: absolute; bottom: 83px; left: 190px; opacity: 1; }
+	
+	#form_wrapper{ padding: 290px 0 0 115px; width: 538px; }
+	
+	#form_wrapper .form_item{ margin: 1px 0 17px 0; }
+	
+	input{ outline: none!important; }
+	.ui-shadow-inset{ -webkit-box-shadow: none!important; box-shadow: none!important; -webkit-border-radius: 0!important; border-radius: 0!important; }
+	input.ui-input-text, textarea.ui-input-text{ padding: 10px 11px 11px 10px; outline: none; width: 79%; margin: 0 0 0 91px; background: #1F65AB!important; }
+	.ui-body-c{ border: 2px #1f65ab solid; text-shadow: none; color: #fff; }
+	.ui-body-c .ui-link{ color: #fff; text-decoration: underline; font-weight: normal; }
+	.checkboxes { margin: 25px 0 14px 0!important; }
+	.checkboxes p{ float: left; margin: 0; width: 470px; font-size: 13px; padding: 8px 0 0 0; }
+	#terms_copy{ font-size: 16px!important;  padding: 2px 0 0 0; }
+	.checkboxes .checkbox_input{ float: left; width: 50px; height: 10px; }
+	.checkbox_input, .ui-radio{ margin: 0; }
+
+	
+	.checkbox_style {
+	-webkit-appearance: none;
+	background-color: #1f65ab;
+	padding: 12px;
+	display: inline-block;
+	position: relative;
+	border: 2px #1f65ab solid;
+}
+
+.checkbox_style:active, .checkbox_style:checked:active {
+}
+
+.checkbox_style:checked {
+	background-color: #1f65ab;
+	color: #fff;
+}
+
+.checkbox_style:checked:after {
+	content: '\2714';
+	font-size: 18px;
+	position: absolute;
+	top: 0px;
+	left: 3px;
+	color: #ffffff;
+}
+
+	

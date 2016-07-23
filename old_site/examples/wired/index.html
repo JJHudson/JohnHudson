@@ -1,0 +1,470 @@
+<!DOCTYPE html> 
+
+<!-- All artwork and code is copyright / intellectual property of Kodu Digital Marketing Ltd. -->
+
+<html lang="en"> 
+  <head> 
+    <title>Draw Your Passion</title>
+  	<meta name="apple-mobile-web-app-capable" content="yes">
+  	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1" />
+	<link rel="apple-touch-icon" href="img/apple-touch-icon-114x114.png" />
+	<link rel="apple-touch-startup-image" href="img/startup.jpg">	
+	<link rel="stylesheet" type="text/css" href="files/ui.css" />
+	<link rel="stylesheet" type="text/css" href="css/main_ipad.css" />
+	<script src="files/jquery.js"></script>
+	<script src="files/jqueryMobile.js"></script>
+    
+	<script type="text/javascript" charset="utf-8">  
+	
+	/**************************************************
+	
+		JAVASCRIPT LAYOUT
+		
+		1. SET VARIABLES
+		
+		2. INITIATE CANVAS
+			2b. IF SKETCH SAVED LOCALLY, LOAD IT
+		
+		3. LISTEN FOR TOUCH EVENT AND DRAW LINES
+		
+		4. PREVENT PAGE FROM SCROLLING WHILST DRAWING
+		
+		5. DETECT CLICK ON CLEAR BUTTON
+			5b. IF CONFIRM CLEAR
+			5c. IF CONFIRM REJECT
+		
+		6. DETECT IF ONLINE AND SHOW CORRECT SUBMIT POPUP
+			6b. CHECK FORM, SAVE DATA
+			
+		7. SWITCH BETWEEN PENCIL AND ERASER
+		
+		8. DETECT USER SELECTED BRUSH SIZE
+		
+		9. DETECT USER SELECTED COLOUR
+		
+		10. CLOSE SORRY OVERLAY
+			10b. CLOSE THANKS OVERLAY
+			10c. SHOW TERMS OVERLAY
+			10d. CLOSE TERMS OVERLAY
+			10e. CLOSE SUBMIT OVERLAY
+	
+	**************************************************/
+	
+	window.addEventListener('load',function(){	
+	
+		$(".ui-checkbox").removeClass("ui-checkbox").addClass("checkbox_input");
+		
+		//----------1. SET VARIABLES----------//
+		var hex;
+		var hexColor;
+		var slideValue;
+		var saveData;
+		
+		//----------2. INITIATE CANVAS----------//
+		var canvas = document.getElementById('sketchpad');
+		var context = canvas.getContext('2d');
+		context.fillStyle = '#00f'; // red
+		context.strokeStyle = '#000'; // red
+		context.lineWidth = 20;
+		context.lineCap = 'round';
+		context.miterLimit = 1;
+		
+		
+		//----------2b. IF SKETCH SAVED LOCALLY, LOAD IT----------//
+		make_base();
+		function make_base(){
+			if(localStorage.imageBase){
+				base_image = new Image();
+		  		base_image.src = localStorage.imageBase;
+		  		base_image.onload = function(){
+		  		  context.drawImage(base_image, 0, 0);
+		  		}
+		  	}
+		}
+		
+		
+		//----------3. LISTEN FOR TOUCH EVENT AND DRAW LINES----------//
+		canvas.addEventListener('touchstart',function(event) {
+		  coorsX = event.touches[0].pageX;
+		  coorsY = event.touches[0].pageY;
+		  context.beginPath();
+		  context.moveTo(coorsX, coorsY);
+		  loggedCoords += coorsX+" "+coorsY;
+		},false);
+		
+		canvas.addEventListener('touchmove',function(event) {
+		  coorsX = event.touches[0].pageX;
+		  coorsY = event.touches[0].pageY;
+		  context.lineTo(coorsX, coorsY);
+		  context.stroke();
+		  loggedCoords += coorsX+" "+coorsY;
+		},false);
+		
+		canvas.addEventListener('touchend',function(event) {
+			saveData = canvas.toDataURL("image/png");
+			localStorage.imageBase=saveData;
+		},false);
+		
+			    
+		
+		//----------4. PREVENT PAGE FROM SCROLLING WHILST DRAWING----------//
+		document.body.addEventListener('touchmove',function(event){
+			event.preventDefault();
+		},false);	// end body.onTouchMove
+		
+
+		//----------5. DETECT CLICK ON CLEAR BUTTON----------//
+		document.getElementById('clear').addEventListener('touchstart',function(event){
+			event.preventDefault();
+			$("#clear_overlay").css("display", "block");
+		},false);
+		
+		
+		//----------5b. IF CONFIRM CLEAR----------//
+		document.getElementById('clear_true').addEventListener('touchstart',function(event){
+			context.clearRect(0, 0, canvas.width, canvas.height);
+			saveData = canvas.toDataURL("image/png");
+			localStorage.imageBase=saveData;
+			undoHistory = [];
+			$("#clear_overlay").css("display", "none");
+		},false);
+		
+		//----------5C. IF CONFIRM REJECT----------//
+		document.getElementById('clear_false').addEventListener('touchstart',function(event){
+			$("#clear_overlay").css("display", "none");
+		},false);
+		
+		
+		//----------6. DETECT IF ONLINE AND SHOW CORRECT SUBMIT POPUP----------//
+		document.getElementById('submit').addEventListener('click',function(event){
+			event.preventDefault();
+				if (navigator.onLine) {
+					$("#submit_overlay").css("display","block");
+				}else{
+					$("#sorry_overlay").css("display","block");
+				}
+		},false);
+		
+		
+		//----------6b. CHECK FORM, SAVE DATA----------//
+		document.getElementById('submitDrawing').addEventListener('click',function(event){
+			
+			var canvasData = canvas.toDataURL("image/png");
+			var name = $("#name").val();
+			var email = $("#email").val();
+			if($('#receive_wired').attr('checked')){var wired = "Y"}else{var wired = "N"}
+			if($('#receive_conde_nast').attr('checked')){var conde = "Y"}else{var conde = "N"}
+			if($('#terms').attr('checked')){var terms = "Y"}else{var terms = "N"}
+			
+			if( name == '' || name == 'undefined'){ 
+				$("#name").css("border", "2px #e60000 solid");
+			}else{
+				$("#name").css("border", "2px #1f65ab solid");
+			}
+			
+			if(email == '' || email == 'undefined' || email.indexOf('@') == -1){
+				$("#email").css("border", "2px #e60000 solid");
+			}else{
+				$("#email").css("border", "2px #1f65ab solid");
+			}
+			
+			if(terms == "N"){
+				$("#terms").css("border", "2px #e60000 solid");
+			}else{
+				$("#terms").css("border", "2px #1f65ab solid");
+			}
+			
+			if( name != '' && name != 'undefined' && email != '' && email != 'undefined' && email.indexOf('@') != -1 && terms != "N"){				
+				var ajax = new XMLHttpRequest();
+				var parameters = "canvasData="+encodeURIComponent(canvasData)+"&name="+encodeURIComponent(name)+"&email="+encodeURIComponent(email)+"&wired="+encodeURIComponent(wired)+"&conde="+encodeURIComponent(conde)+"&terms="+encodeURIComponent(terms);
+				ajax.open("POST",'',true);
+				ajax.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+				ajax.setRequestHeader("Connection", "close");
+				ajax.send(parameters);
+				localStorage.imageBase=canvasData;
+				$("#submit_overlay").css("display", "none");
+				$("#thanks_overlay").css("display", "block");
+				
+			}
+		},false);
+		
+		
+		//----------7. SWITCH BETWEEN PENCIL AND ERASER----------//
+		document.getElementById('draw_erase').addEventListener('touchstart',function(event){
+			event.preventDefault();
+			if($(this).hasClass("pencil")){
+				context.globalCompositeOperation = "destination-out";
+				$(this).removeClass("pencil").addClass("erase");
+			}else if($(this).hasClass("erase")){
+				context.globalCompositeOperation = "source-over";
+				context.lineCap = 'round';
+				context.miterLimit = 1;
+				$(this).addClass("pencil").removeClass("erase");
+			}
+		},false);
+		
+		
+		//----------8. DETECT USER SELECTED BRUSH SIZE----------//
+		$("#brush_wrapper .ui-slider").live("touchend", function(event){
+			event.preventDefault();
+			var brushSize = $(this).children().attr("aria-valuenow");
+			context.lineWidth = brushSize;
+		});
+		
+		
+		//----------9. DETECT USER SELECTED COLOUR----------//		
+		$("#color_wrapper .ui-slider").bind("touchmove touchend", function(event){
+			event.preventDefault();
+			slideValue = $(this).children().attr("aria-valuenow");
+				if(slideValue == 1){
+					hex = '#000000';
+					color = 'black';
+				}else if(slideValue == 2){
+					hex = '#c3c3c3';
+					color = 'navy';
+				}else if(slideValue == 3){
+					hex = '#094486';
+					color = 'royal blue';
+				}else if(slideValue == 4){
+					hex = '#006be4';
+					color = 'aqua';
+				}else if(slideValue == 5){
+					hex = '#12c0eb';
+					color = 'green';
+				}else if(slideValue == 6){
+					hex = '#038200';
+					color = 'lime';
+				}else if(slideValue == 7){
+					hex = '#53b81b';
+					color = 'yellow';
+				}else if(slideValue == 8){
+					hex = '#c3ff76';
+					color = 'orange';
+				}else if(slideValue == 9){
+					hex = '#fdef4e';
+					color = 'red';
+				}else if(slideValue == 10){
+					hex = '#ffcc00';
+					color = 'crimson';
+				}else if(slideValue == 11){
+					hex = '#ff9600';
+					color = 'crimson';
+				}else if(slideValue == 12){
+					hex = '#bc5b0d';
+					color = 'crimson';
+				}else if(slideValue == 13){
+					hex = '#e10b0b';
+					color = 'crimson';
+				}else if(slideValue == 14){
+					hex = '#a7168d';
+					color = 'crimson';
+				}else if(slideValue == 15){
+					hex = '#ffcdcb';
+					color = 'crimson';
+				}
+				
+				$("#color_wrapper .ui-slider-handle").css("background",hex);
+				$("#color_wrapper .ui-slider-handle").css("display", "none");
+				setTimeout(function(){
+					$("#color_wrapper .ui-slider-handle").css("display", "block");
+				}, 1);
+				
+				context.strokeStyle = hex;
+		});
+		
+		
+		//----------10. CLOSE SORRY OVERLAY----------//
+		$("#sorry_overlay").bind("touchend", function(event){
+			event.preventDefault();
+			$("#sorry_overlay").css("display", "none");
+		});
+		
+		
+		//----------10b. CLOSE THANKS OVERLAY----------//
+		$("#thanks_overlay").bind("touchend", function(event){
+			event.preventDefault();
+			$("#thanks_overlay").css("display", "none");
+		});
+		
+		
+		//----------10c. SHOW TERMS OVERLAY----------//
+		$("#showTerms").bind("touchend", function(event){
+			event.preventDefault();
+			$("#terms_overlay").css("display", "block");
+		});
+		
+		
+		//----------10d. CLOSE TERMS OVERLAY----------//
+		$("#terms_overlay #close_terms").bind("touchend", function(event){
+			event.preventDefault();
+			$("#terms_overlay").css("display", "none");
+		});
+		
+		
+		//----------10e. CLOSE SUBMIT OVERLAY----------//
+		$("#backtToDoodle").bind("touchend", function(event){
+			event.preventDefault();
+			$("#submit_overlay").css("display", "none");
+		});
+		
+	
+				
+		
+	},false);
+</script>
+ 
+</head> 
+
+  <body> 
+  
+  	<div id="container"> 
+      <canvas id="sketchpad" width="800" height="780"> 
+        Sorry, your browser is not supported.
+      </canvas>	
+      
+      	
+	  <div class="button" id="clear">Clear</div>
+	  <div id="submit">Submit</div>
+	  <div id="show_front"></div>
+	  
+	  	<div id="btn_pencil">
+	  		<div class="button pencil" id="draw_erase"></div>
+		</div>
+		
+		<div id="btn_brush">
+			<form id="brush_wrapper">
+   				<input type="range" name="brushSize" id="brushSize" value="20" min="1" max="35"  />
+			</form>
+		</div>
+	
+		<div id="btn_color">
+			<form id="color_wrapper">
+   				<input type="range" name="color" id="color" value="1" min="1" max="15" step="1"  />
+			</form>
+		</div>
+
+		<div class="clear"></div>
+		
+		
+		
+		<div id="sorry_overlay">
+			<div class="overlay_bg"></div>
+			<div id="sorry_copy"></div>
+		</div>
+		
+		<div id="submit_overlay">
+			<div class="overlay_bg"></div>
+			<div id="submit_copy">
+			
+				<div id="form_wrapper">
+					<div class="form_item">
+						<input type="text" name="name" id="name" />
+					</div>
+					<div class="form_item">
+						<input type="text" name="email" id="email" />
+					</div>
+					<div class="form_item checkboxes">
+						<input type="checkbox" name="terms" id="terms" class="checkbox_style" /> <p id="terms_copy">I have read and accept the Terms and conditions of this promotion.*</p><div class="clear"></div>
+					</div>
+					<div class="form_item checkboxes">
+ 			 			<input type="checkbox" name="receive_conde_nast" id="receive_conde_nast" class="checkbox_style" /><p> Tick to receive emails about special offers from Condé Nast ltd.</p><div class="clear"></div>
+ 			 		</div>
+ 			 		<div class="form_item checkboxes">
+ 			 			<input type="checkbox" name="receive_wired" id="receive_wired" class="checkbox_style" /><p> Tick to receive further information from exclusive partners of Condé Nast ltd.</p><div class="clear"></div><br />
+ 			 			<p>* Fields must be completed in order to submit your Doodle.</p>
+ 			 		</div>
+ 			 		
+ 			 		<div id="submitDrawing"></div>
+ 			 		<div id="backtToDoodle"></div
+ 			 	</div>
+			</div>
+		</div>
+		</div>
+		
+		<div id="thanks_overlay">
+			<div class="overlay_bg"></div>
+			<div id="thanks_copy"></div>
+		</div>
+		
+		<div id="terms_overlay">
+			<p class="bold">TERMS AND CONDITIONS</p>
+
+			<ul>
+			
+			<li>The Promotion is open to residents of the United Kingdom who are aged 18 years or over, except employees of
+			Samsung and Condé Nast Publications Ltd or their affiliated companies, their families, cohabitants, agents or anyone
+			professionally connected with the Promotion.</li>
+			
+			<li>No purchase is necessary for entry into the Promotion. Entries received after the relevant closing date will not be
+			accepted.</li>
+			
+			<li>Entries must be received no later than 05 December at 00:00. Only one entry per valid email address is permitted. Only fully
+			completed entry forms will be accepted. Incomplete or unreadable entries will be disqualified.</li>
+			
+			<li>No responsibility is accepted for any entries that are incomplete, unreadable, ineligible, corrupted, lost or delayed or
+			are unable to be sent due to technical or any other reason, or for any charge by the senders network for repeat entries.</li>
+			
+			<li>Samsung are giving away prize. Please note only one (1) per person.</li>
+			
+			<li>The one (1) winner/s will be the first entry drawn at random from all valid and completed entries and carried out
+			under the supervision of an independent observer. The winner will be notified by email within 14 days of the relevant
+			draw. The results of the free prize draw are final and no correspondence will be entered into. If a winner cannot be
+			contacted within 21 days of the relevant draw, the promoter reserves the right at its absolute discretion to withdraw
+			prize entitlement and award the prize to a substitute winner drawn at the same time as the original. The prize is non-
+			transferable and there is no cash alternative for the prize.</li>
+			
+			<li>At the promoter’s discretion the promoter reserves the right to substitute the prize or any items within it for items of
+			equivalent or greater value, if in all reasonable circumstances the promoter is unable to offer the intended prize(s).</li>
+			
+			<li>The prizewinner’s name and county of residence can be obtained by sending a letter within 14 days following the free
+			prize draw to: Condé Nast Digital, Vogue House, Hanover Square, London, W1S1JU</li>
+			
+			<li>All entries become and remain the property of the promoter.</li>
+			
+			<li>By submitting an entry, entrants acknowledge and accept these terms and conditions and agree that the winner agrees
+			that their name, county of residence and drawing may be released if they win a prize, and consent to any post-event publicity.</li>
+			
+			<li>You can opt-out at any time by clicking the unsubscribe link at the bottom of every email or by contacting Condé Nast
+			Publications Ltd and asking to be removed from our mailing list.</li>
+			
+			<li>The promoter retains sole discretion to withhold prizes without liability if in its view a winner is ineligible, the entry is
+			invalid or a winner does not meet the necessary requirements as set out in these terms and conditions. The promoter
+			reserves the right to withdraw or amend the Promotion in the vent of unforeseen circumstances or circumstances
+			outside of its control.</li>
+			
+			<li>Condé Nast Publications Ltd is the promoter of this competition and can be contacted at Vogue House, 1 Hanover
+			Square, London, W1S 1JU.</li>
+			
+			<li>Entry must be made by the entrant, only on the Wired UK Samsung Galaxy Note 10.1 edition. Entries made by any other
+			individual or any entity, and/or originating at any other application, Internet web site or email address, including but not limited
+			to commercial competitions, subscription, notification and/or entering service sites, will be declared invalid and
+			disqualified from this free prize draw. The use of any device to automate the entry process is prohibited.</li>
+			
+			<li>To the extent permitted by law, the promoter excludes all liability whatsoever to entrants and the winner in relation to
+			the Promotion and the prize(s) to be awarded.</li>
+			
+			<li>The Promotion and these terms and conditions are governed by English law and are subject to the exclusive jurisdiction
+			of the English courts.</li>
+			
+			</ul>
+			
+			<div id="close_terms"></div>
+			
+		</div>
+		
+		<div id="thanks_overlay">
+			<div class="overlay_bg"></div>
+			<div id="thanks_copy"></div>
+		</div>
+		
+		<div id="clear_overlay">
+			<div class="overlay_bg"></div>
+			<div id="clear_copy">
+				<div id="clear_true"></div>
+				<div id="clear_false"></div>
+			</div>
+		</div>
+			 
+	</div> 
+  </body> 
+</html>
