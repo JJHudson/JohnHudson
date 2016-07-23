@@ -1,0 +1,17 @@
+.button {
+	@include transition();
+
+	border: 2px $black solid;
+	border-radius: 2px;
+	cursor: pointer;
+	display: inline-block;
+	font-family: 'Pluto Sans', Georgia, Serif;
+	padding: 10px 15px;
+	text-decoration: none;
+	text-transform: uppercase;
+
+	&:hover {
+		background: $black;
+		color: $grey;
+	}
+}

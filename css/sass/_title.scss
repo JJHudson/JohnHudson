@@ -1,0 +1,67 @@
+.title {
+	font-family: 'Pluto Sans', Georgia, Serif;
+	position: relative;
+	text-transform: uppercase;
+}
+
+.title--light {
+	color: $black;
+}
+
+.title--small {
+	font-size: 2vw;
+	letter-spacing: 2px;
+	line-height: 2vw;
+
+	span {
+		font-size: 1rem;
+		line-height: 1.5rem;
+	}
+
+	@include media('<tablet') {
+		font-size: 1.4rem;
+		line-height: 2.4rem;
+	}
+}
+
+.title--medium {
+	font-size: 3vw;
+	letter-spacing: 2px;
+	line-height: 3vw;
+
+	@include media('<tablet') {
+		font-size: 6vw;
+		line-height: 7vw;
+	}
+}
+
+.title--large {
+	font-size: 4vw;
+	letter-spacing: 2px;
+	line-height: 4vw;
+
+	@include media('<tablet') {
+		font-size: 2rem;
+		line-height: 2rem;
+	}
+}
+
+.title--underlined {
+	margin-bottom: 3vw;
+	padding-bottom: 3vw;
+
+	&:after {
+		background: $black;
+		bottom: 0;
+		content: '';
+		height: 4px;
+		left: 0;
+		position: absolute;
+		width: 15%;
+	}
+}
+
+.title--center {
+	text-align: center;
+	padding: 0 20%;
+}

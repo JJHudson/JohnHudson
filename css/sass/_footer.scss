@@ -1,0 +1,74 @@
+.footer {
+	@extend %cf;
+
+	background: $white;
+	border-top: 4px $darkGrey solid;
+	height: 100px;
+	padding: 2% 0 0 0;
+	margin: 2% auto;
+	position: relative;
+	width: 92%;
+	
+}
+
+.footer-item {
+	display: block;
+	float: left;
+	text-align: center;
+	width: 33.333%;
+
+	a {
+		@include transition();
+
+		cursor: pointer;
+		text-decoration: none;
+
+		span {
+			color: $darkGrey;
+
+			@include media('<tablet') {
+				padding-left: 0 !important;
+				padding-right: 0 !important;
+			}
+		}
+
+		&:hover {
+			color: $darkGrey;
+		}
+	}
+
+	@include media('<tablet') {
+		text-align: center !important;
+		width: 100%;
+	}
+}
+
+.footer-item--left {
+	text-align: left;
+
+	a{
+		span {
+			padding-left: 31px;
+		}
+
+	}
+}
+
+.footer-item--right {
+	float: right;
+	text-align: right;
+
+	a{
+
+		span {
+			padding-right: 31px;
+		}
+
+	}
+
+	@include media('<tablet') {
+
+		margin-top: 1rem;
+
+	}
+}

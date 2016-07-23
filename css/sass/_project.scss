@@ -1,0 +1,145 @@
+.project__hero {
+	box-sizing: border-box;
+	margin: 0 0 0 25%;
+	padding: 2%;
+	position: relative;
+	width: 75%;
+
+	@include media('<desktop') {
+		margin: 0;
+		width: 100%;
+	}
+}
+
+.project__row {
+	@extend %cf;
+
+	box-sizing: border-box;
+	padding: 2%;
+	position: relative;
+}
+
+.project__row--title {
+	padding: 12% 2%;
+}
+
+.project__image {
+	float: left;
+	width: 100%;
+}
+
+.project__image--right {
+	float: right;
+}
+
+.project__image--50 {
+	box-sizing: border-box;
+	padding: 2% 0;
+	width: 50%;
+
+	@include media('<desktop') {
+		float: left;
+		width: 100%;
+	}
+}
+
+.project__intro {
+	left: -25%;
+	position: absolute;
+	top: 10%;
+
+	a {
+		@include transition();
+
+		display: inline-block;
+		position: relative;
+		text-decoration: none;
+
+		&:after {
+			@include transition();
+
+			background: $black;
+			content: '';
+			height: 4px;
+			left: 0;
+			position: absolute;
+			top: 8px;
+			width: 0%;
+		}
+
+		&:hover {
+			color: $black;
+
+			&:after {
+				width: 100%;
+			}
+		}
+	}
+
+	h2 {
+		width: 35%;
+	}
+
+	@include media('<desktop') {
+		margin: 25px 0 0 0;
+		left: 0;
+		position: relative;
+	}
+}
+
+.project__box {
+	@include translateY();
+
+	box-sizing: border-box;
+	left: 50%;
+	padding: 4% 8% 4% 4%;
+	position: absolute;
+	width: 50%;
+
+	@include media('<desktop') {
+		@include translateY(0,0);
+		
+		left: 0;
+		padding: 2% 0%;
+		position: relative;
+		width: 100%;
+	}
+
+	p {
+		width: 75%;
+
+		@include media('<tablet') {
+			width: 100%;
+		}
+	}
+}
+
+.project__box--left {
+	left: 0;
+	padding: 4% 4% 4% 8%;
+
+	@include media('<desktop') {
+		padding: 2% 0%;
+	}
+
+}
+
+.project__video {
+	height: 0;
+	max-width: 100%;
+	overflow: hidden;
+	padding-bottom: 56.25%;
+	position: relative;
+
+	iframe,
+	object,
+	embed {
+		height: 100%;
+		left: 0;
+		position: absolute;
+		top: 0;
+		width: 100%;
+	}
+}
+
+

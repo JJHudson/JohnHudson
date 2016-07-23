@@ -1,0 +1,21 @@
+html {
+	height: 100%;
+	width: 100%;
+}
+
+body {
+	background: $white;
+	box-sizing: border-box;
+	color: $black;
+	font-family: 'Open Sans', Arial, Sans-Serif;
+	font-size: 16px;
+	line-height: 22px;
+	-webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    height: 100%;
+    width: 100%;
+}
+
+a {
+	color: $black;
+}

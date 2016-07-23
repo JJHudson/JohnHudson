@@ -1,0 +1,152 @@
+.article {
+	box-sizing: border-box;
+	float: left;
+	padding: 2%;
+	position: relative;
+	width: 100%;
+}
+
+.article--sqaure {
+	width: 50%;
+
+	@include media('<desktop') {
+		
+	}
+
+	@include media('<tablet') {
+		width: 100%;
+		margin-bottom: 2%;
+	}
+}
+
+.article--small {
+	width: 25%;
+
+	@include media('<desktop') {
+		width: 50%;
+	}
+
+	@include media('<tablet') {
+		width: 100%;
+	}
+}
+
+.article--right {
+	float: right;
+}
+
+.article--intro {
+	@include media('<desktop') {
+		margin-top: 2%;
+		padding: 0% 2% 2% 2%;
+	}
+}
+
+.article__copy {
+	box-sizing: border-box;
+	height: 100%;
+	left: 0;
+	padding: 12%;
+	position: absolute;
+	top: 0;
+	width: 100%;
+
+	@include media('<desktop') {
+		padding: 4%;
+		position: relative;
+	}
+}
+
+.article__bg {
+	@include media('<desktop') {
+		position: absolute;
+		top: 0;
+		width: 92%;
+	}
+	
+	@include media('<tablet') {
+		height: 100%;
+		position: absolute;
+		top: 0;
+		width: 96%;
+	}
+}
+
+.article__headline {
+	font-family: 'Pluto Sans', Georgia, Serif;
+	position: relative;
+	text-transform: uppercase;
+
+	font-size: 3.5vw;
+	letter-spacing: 2px;
+	line-height: 3.5vw;
+
+	@include media('<tablet') {
+		font-size: 2rem;
+		line-height: 2rem;
+	}
+}
+
+.article__intro {
+	border-bottom: 2px $black solid;
+	border-top: 2px $black solid;
+	font-size: 2vw;
+	line-height: 2.5vw;
+	margin: 5% 0;
+	padding: 5% 0;
+
+	@include media('>desktop') {
+		font-size: 1.25rem;
+		line-height: 1.75rem;
+	}
+
+	@include media('<tablet') {
+		font-size: 1rem;
+		line-height: 1.5rem;
+	}
+}
+
+.article__title {
+	@include blur();
+	@include transition();
+	@include translateY();
+
+	color: $white;
+}
+
+.article__cover {
+	@include transition();
+
+	background: rgba(0,0,0,0.75);
+	box-sizing: border-box;
+	left: 8%;
+	height: calc(100% - 16%);
+	opacity: 0;
+	padding: 4%;
+	position: absolute;
+	top: 8%;
+	text-align: center;
+	width: calc(100% - 16%);
+
+	&:hover {
+		opacity: 1;
+
+		.article__title {
+			@include blur(0);
+		}
+	}
+
+	@include media('<tablet') {
+		left: 2% !important;
+		height: calc(100% - 4%) !important;
+		top: 2% !important;
+		width: calc(100% - 4%) !important;
+	}
+}
+
+.article__cover--large {
+	left: 4%;
+	height: calc(100% - 8%);
+	top: 4%;
+	width: calc(100% - 8%);
+}

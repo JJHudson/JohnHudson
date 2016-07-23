@@ -1,0 +1,152 @@
+.header {
+	@extend %cf;
+	
+	background: $white;
+	height: 100px;
+	padding: 2% 0 0 0;
+	position: relative;
+	width: 100%;
+	
+}
+
+.header__intro {
+	@include translateY();
+
+	position: relative;
+	float: left;
+	left: 4%;
+
+	a {
+		text-decoration: none;
+	}
+
+	@include media('<tablet') {
+		width: auto;
+	}
+}
+
+.header__contact {
+	@extend %cf;
+	@include translateY();
+
+	float: right;
+	right: 4%;
+
+	@include media('<tablet') {
+		@include translateY(0,0);
+
+		background: #fff;
+		box-sizing: border-box;
+		display: none;
+		height: 100vh;
+		left: 0;
+		padding: 50px 0 0 0;
+	    position: fixed;
+	    top: 0;
+	    text-align: center;
+	    z-index: 99999999;
+
+	    &.header__contact--active {
+	    	display: block;
+	    }
+	}
+}
+
+.header__icon {
+	cursor: pointer;
+	float: left;
+	margin: 10px 20px 0 0;
+	text-decoration: none;
+	position: relative;
+
+	@include media('<tablet') {
+		display: block;
+		float: none;
+		margin: 20px auto;
+	}
+
+	svg {
+		@include transition();
+
+		fill: $black;
+
+		&:hover {
+			fill: $darkGrey;
+		}
+	}
+}
+
+.header__icon--codepen {
+	margin: 5px 15px 0 0;
+
+	@include media('<tablet') {
+		display: block;
+		float: none;
+		margin: 20px auto;
+	}
+}
+
+.header__icon--linkedin {
+	margin: 8px 13px 0 0;
+
+	@include media('<tablet') {
+		display: block;
+		float: none;
+		margin: 20px auto;
+	}
+}
+
+.header__icon--email {
+	margin: 10px 17px 0 0;
+
+	@include media('<tablet') {
+		display: block;
+		float: none;
+		margin: 20px auto;
+	}
+}
+
+.header__icon--tel {
+	margin: 10px 13px 0 0;
+
+	font-family: 'Pluto Sans', Georgia, Serif;
+	position: relative;
+	text-transform: uppercase;
+
+	@include media('<tablet') {
+		display: block;
+		float: none;
+		margin: 20px auto;
+	}
+}
+
+.header__burger {
+	@include rotate(90deg);
+
+	cursor: pointer;
+	display: none;
+	float: right;
+	height: 44px;
+	letter-spacing: 0;
+	right: 3%;
+	top: 39%;
+	width: 44px;
+
+	@include media('<tablet') {
+		display: block;
+	}
+}
+
+.header__close {
+	cursor: pointer;
+	display: none;
+	position: absolute;
+	right: -6px;
+	top: 4px;
+
+	@include media('<tablet') {
+		display: block;
+	}
+}
+
+
